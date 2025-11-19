@@ -1,12 +1,14 @@
-import openai
-import os
-import dotenv
-from datetime import datetime
 import json
+import os
+from datetime import datetime
+
+import dotenv
+import openai
 
 dotenv.load_dotenv("./.env")
 
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
 
 def get_current_date():
     """
@@ -17,6 +19,7 @@ def get_current_date():
         str: The current date in the format YYYY-MM-DD
     """
     return datetime.now().strftime("%Y-%m-%d")
+
 
 def get_current_weather(date: str, city: str):
     """
@@ -47,9 +50,9 @@ response = client.chat.completions.create(
                 "parameters": {
                     "type": "object",
                     "properties": {},
-                    "additionalProperties": False
-                }
-            }
+                    "additionalProperties": False,
+                },
+            },
         },
         {
             "type": "function",
@@ -59,14 +62,20 @@ response = client.chat.completions.create(
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "date": {"type": "string", "description": "The date to get the weather for"},
-                        "city": {"type": "string", "description": "The city to get the weather for"}
+                        "date": {
+                            "type": "string",
+                            "description": "The date to get the weather for",
+                        },
+                        "city": {
+                            "type": "string",
+                            "description": "The city to get the weather for",
+                        },
                     },
                     "required": ["date", "city"],
-                    "additionalProperties": False
-                }
-            }
-        }
+                    "additionalProperties": False,
+                },
+            },
+        },
     ],
 )
 
@@ -75,7 +84,7 @@ response = client.chat.completions.create(
 
 available_functions = {
     "get_current_date": get_current_date,
-    "get_current_weather": get_current_weather
+    "get_current_weather": get_current_weather,
 }
 
 for choice in response.choices:

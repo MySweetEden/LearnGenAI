@@ -1,7 +1,8 @@
-import openai
 import os
-import dotenv
 import time
+
+import dotenv
+import openai
 
 dotenv.load_dotenv("./.env")
 
@@ -32,4 +33,3 @@ else:
 
 # print(response)
 # print("I want to know when this line is printed")
-
